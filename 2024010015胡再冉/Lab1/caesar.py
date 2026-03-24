@@ -1,22 +1,17 @@
-def caesar_encrypt(text, shift):
-    result = ""
-    for char in text:
+def caesar_decrypt(cipher, k):
+    plaintext = ""
+    for char in cipher:
         if char.isupper():
-            result += chr((ord(char) + shift - 65) % 26 + 65)
-        elif char.islower():
-            result += chr((ord(char) + shift - 97) % 26 + 97)
+            shifted = ord(char) - k
+            if shifted < ord('A'):
+                shifted += 26
+            plaintext += chr(shifted)
         else:
-            result += char
-    return result
+            plaintext += char
+    return plaintext
 
-def caesar_decrypt(text, shift):
-    return caesar_encrypt(text, -shift)
+ciphertext = "NUFECMWBYUJMBIQGYNBYWIXY"
 
-if __name__ == "__main__":
-    plaintext = "Hello, Yuxi Normal University!"
-    shift = 3
-    encrypted = caesar_encrypt(plaintext, shift)
-    decrypted = caesar_decrypt(encrypted, shift)
-    print(f"原文: {plaintext}")
-    print(f"加密后: {encrypted}")
-    print(f"解密后: {decrypted}")
+for k in range(1, 26):
+    result = caesar_decrypt(ciphertext, k)
+    print(f"k={k:2d}: {result}")
